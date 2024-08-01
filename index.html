@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fadilz Mission Chapter 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        #intro, #section, #image, #question, #result {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #intro h1 {
+            font-size: 3em;
+            color: #3498db;
+        }
+        .section-content, .image-content, .question-content {
+            padding: 20px;
+        }
+        .section-content p, .image-content p, .question-content p {
+            margin: 20px 0;
+        }
+        .options button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        .ready {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+        }
+        .not-ready {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="intro">
+        <h1>Welcome to FadilZ Mission Chapter 2</h1>
+    </div>
+    <div id="section">
+        <div id="section-content" class="section-content"></div>
+        <button onclick="nextSection()">Next</button>
+    </div>
+    <div id="image">
+        <img id="legendshadow.jpg" src="legendshadow.jpg" alt="Legend Image" style="width: 300px; height: auto;">
+        <p>Inilah Sang Legenda bayangan, Yang dapat menghancurkan perangkat anda!</p>
+        <button onclick="nextQuestion()">Next</button>
+    </div>
+    <div id="question">
+        <p>Bersiaplah untuk perang melawan Sang Legenda Bayangan!</p>
+        <div class="options">
+            <button class="not-ready" onclick="ignore()">Abaikan itu, Aku sangat malas.</button>
+            <button class="ready" onclick="readyForBattle()">Saya siap! Komandan Arthur!</button>
+        </div>
+    </div>
+    <div id="result">
+        <p id="result-message"></p>
+    </div>
+
+    <audio id="Pukulan.mp3" src="Pukulan.mp3"></audio>
+    <audio id="Suprise.mp3" src="Suprise.mp3"></audio>
+
+    <script>
+        let currentSection = 1;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("intro").style.display = "block";
+            setTimeout(() => {
+                document.getElementById("intro").style.display = "none";
+                document.getElementById("section").style.display = "block";
+                loadSection();
+            }, 3000);
+        });
+
+        function loadSection() {
+            const sectionContent = {
+                1: "Pemain yang terhormat, Saya adalah Arthur.",
+                2: "Saya Akan menolong anda untuk menamatkan misi ini.",
+                3: "Bersiaplah untuk segalanya",
+                4: "Riski Fadil Armaman atau yang dikenal sebagai Shadow Legend, Dia sangat kuat!"
+            };
+
+            document.getElementById("section-content").innerHTML = sectionContent[currentSection];
+            if (currentSection === 4) {
+                document.getElementById("section").style.display = "none";
+                document.getElementById("image").style.display = "block";
+                document.getElementById("legend-image").src = "path-to-image.jpg"; // Ganti dengan path gambar yang diinginkan
+            }
+        }
+
+        function nextSection() {
+            if (currentSection < 4) {
+                currentSection++;
+                loadSection();
+            }
+        }
+
+        function nextQuestion() {
+            document.getElementById("image").style.display = "none";
+            document.getElementById("question").style.display = "block";
+            document.getElementById("failure-audio").pause(); // Hentikan audio jika sebelumnya diputar
+        }
+
+        function ignore() {
+            document.getElementById("question").style.display = "none";
+            document.body.style.backgroundColor = "red";
+            document.getElementById("result").style.display = "block";
+            document.getElementById("result-message").innerText = "BAJIGUR! TERNYATA SEPERTI INI DIRIMU!";
+            document.getElementById("Pukulan.mp3").play();
+            setTimeout(() => {
+                location.reload(); // Restart game
+            }, 3000);
+        }
+
+        function readyForBattle() {
+            document.getElementById("question").style.display = "none";
+            document.getElementById("result").style.display = "block";
+            document.getElementById("result-message").innerText = "Bagus! Bersiaplah di chapter 3!";
+            document.getElementById("Suprise.mp3").play();
+            setTimeout(() => {
+                document.getElementById("result-message").innerText = "Misi selesai";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
